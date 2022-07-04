@@ -25,6 +25,15 @@ func NewUserIdQueryLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserI
 
 func (l *UserIdQueryLogic) UserIdQuery(in *user.IdQueryReq) (*user.UserInfoObj, error) {
 	// todo: add your logic here and delete this line
-
-	return &user.UserInfoObj{}, nil
+	one, err := l.svcCtx.UserModel.FindOne(l.ctx, in.Id)
+	if err != nil {
+		return nil, err
+	}
+	return &user.UserInfoObj{
+		Id:       one.Id,
+		Name:     one.Name,
+		Nickname: "",
+		Birthday: "2022-01-01",
+		Phone:    one.Phone,
+	}, nil
 }

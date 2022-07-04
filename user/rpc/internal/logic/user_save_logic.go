@@ -3,6 +3,7 @@ package logic
 import (
 	"context"
 
+	"github.com/zhovdawei/gozero-micro-service/user/model"
 	"github.com/zhovdawei/gozero-micro-service/user/rpc/internal/svc"
 	"github.com/zhovdawei/gozero-micro-service/user/rpc/user"
 
@@ -26,5 +27,33 @@ func NewUserSaveLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserSave
 func (l *UserSaveLogic) UserSave(in *user.UserInfoObj) (*user.CommonResp, error) {
 	// todo: add your logic here and delete this line
 
-	return &user.CommonResp{}, nil
+	if in != nil {
+
+		if in.Id == 0 {
+			_, err := l.svcCtx.UserModel.Insert(l.ctx, &model.User{
+				Name:     in.Name,
+				Phone:    in.Phone,
+				Password: "123456",
+				Gender:   1,
+			})
+
+			if err != nil {
+				return nil, err
+			}
+		} else {
+			err := l.svcCtx.UserModel.Update(l.ctx, &model.User{
+				Id:       in.Id,
+				Name:     in.Name,
+				Phone:    in.Phone,
+				Password: "123456",
+				Gender:   1,
+			})
+
+			if err != nil {
+				return nil, err
+			}
+		}
+	}
+
+	return &user.CommonResp{Result: true}, nil
 }
