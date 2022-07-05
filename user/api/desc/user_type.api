@@ -1,0 +1,25 @@
+syntax = "v1"
+
+type (
+	UserRegistoryReq {
+		Name     string `json:"name"`
+		Phone    string `json:"phone"`
+		Passwd   string `json:"password"`
+		Birthday string `json:"birthday"`
+	}
+
+	UserRegistoryResp {
+		Uid string `json:"uid"`
+	}
+)
+
+type (
+	UserLoginReq {
+		Phone  string `json:"phone"`
+		Passwd string `json:"password"`
+	}
+
+	UserLoginResp {
+		Uid string `json:"uid"`
+	}
+)

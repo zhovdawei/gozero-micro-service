@@ -1,0 +1,23 @@
+syntax = "v1"
+
+info(
+	version: "v1"
+	title: "用户中心"
+	desc: "用户注册/登录/登出/注销"
+	author: "zhovdawei"
+	email: "zdw0607@gmail.com"
+)
+
+import "./user_type.api"
+
+service user {
+	
+	@doc "注册"
+	@handler userRegistory
+	post /user/registory (UserRegistoryReq) returns (UserRegistoryResp)
+	
+	@doc "登录"
+	@handler userLogin
+	post /user/login (UserLoginReq) returns (UserLoginResp)
+	
+}
