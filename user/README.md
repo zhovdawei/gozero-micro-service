@@ -28,3 +28,17 @@ CREATE TABLE `user` (
 goctl model mysql datasource -url="root:Mysql_321@tcp(192.168.56.103:3306)/go_user" -table="user" -c -dir ./model
 
 ```
+
+## Rpc 生成
+```shell
+
+goctl rpc protoc ./pb/user.proto --go_out=. --go-grpc_out=. --zrpc_out=. --style=go_zero
+
+```
+
+## Api 生成
+```shell
+
+goctl api go -api ./desc/user.api -dir . --style=go_zero
+
+```

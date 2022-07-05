@@ -2,13 +2,12 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.19.4
-// source: user.proto
+// source: pb/user.proto
 
-package user
+package pb
 
 import (
 	context "context"
-
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -37,7 +36,7 @@ func NewUserClient(cc grpc.ClientConnInterface) UserClient {
 
 func (c *userClient) UserSave(ctx context.Context, in *UserInfoObj, opts ...grpc.CallOption) (*CommonResp, error) {
 	out := new(CommonResp)
-	err := c.cc.Invoke(ctx, "/user.user/UserSave", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/pb.user/UserSave", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +45,7 @@ func (c *userClient) UserSave(ctx context.Context, in *UserInfoObj, opts ...grpc
 
 func (c *userClient) UserIdQuery(ctx context.Context, in *IdQueryReq, opts ...grpc.CallOption) (*UserInfoObj, error) {
 	out := new(UserInfoObj)
-	err := c.cc.Invoke(ctx, "/user.user/UserIdQuery", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/pb.user/UserIdQuery", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -95,7 +94,7 @@ func _User_UserSave_Handler(srv interface{}, ctx context.Context, dec func(inter
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/user.user/UserSave",
+		FullMethod: "/pb.user/UserSave",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServer).UserSave(ctx, req.(*UserInfoObj))
@@ -113,7 +112,7 @@ func _User_UserIdQuery_Handler(srv interface{}, ctx context.Context, dec func(in
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/user.user/UserIdQuery",
+		FullMethod: "/pb.user/UserIdQuery",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServer).UserIdQuery(ctx, req.(*IdQueryReq))
@@ -125,7 +124,7 @@ func _User_UserIdQuery_Handler(srv interface{}, ctx context.Context, dec func(in
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var User_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "user.user",
+	ServiceName: "pb.user",
 	HandlerType: (*UserServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -138,5 +137,5 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "user.proto",
+	Metadata: "pb/user.proto",
 }

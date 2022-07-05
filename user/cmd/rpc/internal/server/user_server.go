@@ -8,12 +8,12 @@ import (
 
 	"github.com/zhovdawei/gozero-micro-service/user/cmd/rpc/internal/logic"
 	"github.com/zhovdawei/gozero-micro-service/user/cmd/rpc/internal/svc"
-	"github.com/zhovdawei/gozero-micro-service/user/cmd/rpc/user"
+	"github.com/zhovdawei/gozero-micro-service/user/cmd/rpc/pb"
 )
 
 type UserServer struct {
 	svcCtx *svc.ServiceContext
-	user.UnimplementedUserServer
+	pb.UnimplementedUserServer
 }
 
 func NewUserServer(svcCtx *svc.ServiceContext) *UserServer {
@@ -22,12 +22,12 @@ func NewUserServer(svcCtx *svc.ServiceContext) *UserServer {
 	}
 }
 
-func (s *UserServer) UserSave(ctx context.Context, in *user.UserInfoObj) (*user.CommonResp, error) {
+func (s *UserServer) UserSave(ctx context.Context, in *pb.UserInfoObj) (*pb.CommonResp, error) {
 	l := logic.NewUserSaveLogic(ctx, s.svcCtx)
 	return l.UserSave(in)
 }
 
-func (s *UserServer) UserIdQuery(ctx context.Context, in *user.IdQueryReq) (*user.UserInfoObj, error) {
+func (s *UserServer) UserIdQuery(ctx context.Context, in *pb.IdQueryReq) (*pb.UserInfoObj, error) {
 	l := logic.NewUserIdQueryLogic(ctx, s.svcCtx)
 	return l.UserIdQuery(in)
 }

@@ -6,11 +6,17 @@ package user
 import (
 	"context"
 
+	"github.com/zhovdawei/gozero-micro-service/user/cmd/rpc/pb"
+
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"
 )
 
 type (
+	CommonResp  = pb.CommonResp
+	IdQueryReq  = pb.IdQueryReq
+	UserInfoObj = pb.UserInfoObj
+
 	User interface {
 		UserSave(ctx context.Context, in *UserInfoObj, opts ...grpc.CallOption) (*CommonResp, error)
 		UserIdQuery(ctx context.Context, in *IdQueryReq, opts ...grpc.CallOption) (*UserInfoObj, error)
@@ -28,11 +34,11 @@ func NewUser(cli zrpc.Client) User {
 }
 
 func (m *defaultUser) UserSave(ctx context.Context, in *UserInfoObj, opts ...grpc.CallOption) (*CommonResp, error) {
-	client := NewUserClient(m.cli.Conn())
+	client := pb.NewUserClient(m.cli.Conn())
 	return client.UserSave(ctx, in, opts...)
 }
 
 func (m *defaultUser) UserIdQuery(ctx context.Context, in *IdQueryReq, opts ...grpc.CallOption) (*UserInfoObj, error) {
-	client := NewUserClient(m.cli.Conn())
+	client := pb.NewUserClient(m.cli.Conn())
 	return client.UserIdQuery(ctx, in, opts...)
 }
