@@ -4,9 +4,9 @@ import (
 	"net/http"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
-	"github.com/zhovdawei/gozero-micro-service/user/api/internal/logic"
-	"github.com/zhovdawei/gozero-micro-service/user/api/internal/svc"
-	"github.com/zhovdawei/gozero-micro-service/user/api/internal/types"
+	"github.com/zhovdawei/gozero-micro-service/user/cmd/api/internal/logic"
+	"github.com/zhovdawei/gozero-micro-service/user/cmd/api/internal/svc"
+	"github.com/zhovdawei/gozero-micro-service/user/cmd/api/internal/types"
 )
 
 func userLoginHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {

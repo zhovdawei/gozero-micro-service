@@ -4,10 +4,10 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/zhovdawei/gozero-micro-service/user/rpc/internal/config"
-	"github.com/zhovdawei/gozero-micro-service/user/rpc/internal/server"
-	"github.com/zhovdawei/gozero-micro-service/user/rpc/internal/svc"
-	"github.com/zhovdawei/gozero-micro-service/user/rpc/user"
+	"github.com/zhovdawei/gozero-micro-service/user/cmd/rpc/internal/config"
+	"github.com/zhovdawei/gozero-micro-service/user/cmd/rpc/internal/server"
+	"github.com/zhovdawei/gozero-micro-service/user/cmd/rpc/internal/svc"
+	"github.com/zhovdawei/gozero-micro-service/user/cmd/rpc/user"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"

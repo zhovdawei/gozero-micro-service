@@ -1,7 +1,7 @@
 package svc
 
 import (
-	"github.com/zhovdawei/gozero-micro-service/user/api/internal/config"
+	"github.com/zhovdawei/gozero-micro-service/user/cmd/api/internal/config"
 )
 
 type ServiceContext struct {

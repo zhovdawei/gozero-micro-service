@@ -4,9 +4,9 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/zhovdawei/gozero-micro-service/user/api/internal/config"
-	"github.com/zhovdawei/gozero-micro-service/user/api/internal/handler"
-	"github.com/zhovdawei/gozero-micro-service/user/api/internal/svc"
+	"github.com/zhovdawei/gozero-micro-service/user/cmd/api/internal/config"
+	"github.com/zhovdawei/gozero-micro-service/user/cmd/api/internal/handler"
+	"github.com/zhovdawei/gozero-micro-service/user/cmd/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/rest"

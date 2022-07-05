@@ -3,8 +3,8 @@ package logic
 import (
 	"context"
 
-	"github.com/zhovdawei/gozero-micro-service/user/api/internal/svc"
-	"github.com/zhovdawei/gozero-micro-service/user/api/internal/types"
+	"github.com/zhovdawei/gozero-micro-service/user/cmd/api/internal/svc"
+	"github.com/zhovdawei/gozero-micro-service/user/cmd/api/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

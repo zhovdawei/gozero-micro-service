@@ -6,9 +6,9 @@ package server
 import (
 	"context"
 
-	"github.com/zhovdawei/gozero-micro-service/user/rpc/internal/logic"
-	"github.com/zhovdawei/gozero-micro-service/user/rpc/internal/svc"
-	"github.com/zhovdawei/gozero-micro-service/user/rpc/user"
+	"github.com/zhovdawei/gozero-micro-service/user/cmd/rpc/internal/logic"
+	"github.com/zhovdawei/gozero-micro-service/user/cmd/rpc/internal/svc"
+	"github.com/zhovdawei/gozero-micro-service/user/cmd/rpc/user"
 )
 
 type UserServer struct {
