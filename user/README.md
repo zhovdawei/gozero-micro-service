@@ -25,6 +25,6 @@ CREATE TABLE `user` (
 ## Model 生成
 ```shell
 
-
+goctl model mysql datasource -url="root:Mysql_321@tcp(192.168.56.103:3306)/go_user" -table="user" -c -dir ./model
 
 ```
