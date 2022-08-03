@@ -22,8 +22,9 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserClient interface {
-	UserSave(ctx context.Context, in *UserInfoObj, opts ...grpc.CallOption) (*CommonResp, error)
-	UserIdQuery(ctx context.Context, in *IdQueryReq, opts ...grpc.CallOption) (*UserInfoObj, error)
+	QueryUser(ctx context.Context, in *QueryUserByIdReq, opts ...grpc.CallOption) (*UserResp, error)
+	QueryUserPostArray(ctx context.Context, in *QueryUserPostByUserIdReq, opts ...grpc.CallOption) (*UserPostArrayResp, error)
+	QueryUserPost(ctx context.Context, in *QueryUserPostReq, opts ...grpc.CallOption) (*UserPostResp, error)
 }
 
 type userClient struct {
@@ -34,18 +35,27 @@ func NewUserClient(cc grpc.ClientConnInterface) UserClient {
 	return &userClient{cc}
 }
 
-func (c *userClient) UserSave(ctx context.Context, in *UserInfoObj, opts ...grpc.CallOption) (*CommonResp, error) {
-	out := new(CommonResp)
-	err := c.cc.Invoke(ctx, "/pb.user/UserSave", in, out, opts...)
+func (c *userClient) QueryUser(ctx context.Context, in *QueryUserByIdReq, opts ...grpc.CallOption) (*UserResp, error) {
+	out := new(UserResp)
+	err := c.cc.Invoke(ctx, "/pb.user/QueryUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *userClient) UserIdQuery(ctx context.Context, in *IdQueryReq, opts ...grpc.CallOption) (*UserInfoObj, error) {
-	out := new(UserInfoObj)
-	err := c.cc.Invoke(ctx, "/pb.user/UserIdQuery", in, out, opts...)
+func (c *userClient) QueryUserPostArray(ctx context.Context, in *QueryUserPostByUserIdReq, opts ...grpc.CallOption) (*UserPostArrayResp, error) {
+	out := new(UserPostArrayResp)
+	err := c.cc.Invoke(ctx, "/pb.user/QueryUserPostArray", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userClient) QueryUserPost(ctx context.Context, in *QueryUserPostReq, opts ...grpc.CallOption) (*UserPostResp, error) {
+	out := new(UserPostResp)
+	err := c.cc.Invoke(ctx, "/pb.user/QueryUserPost", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -56,8 +66,9 @@ func (c *userClient) UserIdQuery(ctx context.Context, in *IdQueryReq, opts ...gr
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility
 type UserServer interface {
-	UserSave(context.Context, *UserInfoObj) (*CommonResp, error)
-	UserIdQuery(context.Context, *IdQueryReq) (*UserInfoObj, error)
+	QueryUser(context.Context, *QueryUserByIdReq) (*UserResp, error)
+	QueryUserPostArray(context.Context, *QueryUserPostByUserIdReq) (*UserPostArrayResp, error)
+	QueryUserPost(context.Context, *QueryUserPostReq) (*UserPostResp, error)
 	mustEmbedUnimplementedUserServer()
 }
 
@@ -65,11 +76,14 @@ type UserServer interface {
 type UnimplementedUserServer struct {
 }
 
-func (UnimplementedUserServer) UserSave(context.Context, *UserInfoObj) (*CommonResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UserSave not implemented")
+func (UnimplementedUserServer) QueryUser(context.Context, *QueryUserByIdReq) (*UserResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryUser not implemented")
 }
-func (UnimplementedUserServer) UserIdQuery(context.Context, *IdQueryReq) (*UserInfoObj, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UserIdQuery not implemented")
+func (UnimplementedUserServer) QueryUserPostArray(context.Context, *QueryUserPostByUserIdReq) (*UserPostArrayResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryUserPostArray not implemented")
+}
+func (UnimplementedUserServer) QueryUserPost(context.Context, *QueryUserPostReq) (*UserPostResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryUserPost not implemented")
 }
 func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
 
@@ -84,38 +98,56 @@ func RegisterUserServer(s grpc.ServiceRegistrar, srv UserServer) {
 	s.RegisterService(&User_ServiceDesc, srv)
 }
 
-func _User_UserSave_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UserInfoObj)
+func _User_QueryUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryUserByIdReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServer).UserSave(ctx, in)
+		return srv.(UserServer).QueryUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pb.user/UserSave",
+		FullMethod: "/pb.user/QueryUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).UserSave(ctx, req.(*UserInfoObj))
+		return srv.(UserServer).QueryUser(ctx, req.(*QueryUserByIdReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _User_UserIdQuery_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(IdQueryReq)
+func _User_QueryUserPostArray_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryUserPostByUserIdReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServer).UserIdQuery(ctx, in)
+		return srv.(UserServer).QueryUserPostArray(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pb.user/UserIdQuery",
+		FullMethod: "/pb.user/QueryUserPostArray",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).UserIdQuery(ctx, req.(*IdQueryReq))
+		return srv.(UserServer).QueryUserPostArray(ctx, req.(*QueryUserPostByUserIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_QueryUserPost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryUserPostReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).QueryUserPost(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.user/QueryUserPost",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).QueryUserPost(ctx, req.(*QueryUserPostReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -128,12 +160,16 @@ var User_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*UserServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "UserSave",
-			Handler:    _User_UserSave_Handler,
+			MethodName: "QueryUser",
+			Handler:    _User_QueryUser_Handler,
 		},
 		{
-			MethodName: "UserIdQuery",
-			Handler:    _User_UserIdQuery_Handler,
+			MethodName: "QueryUserPostArray",
+			Handler:    _User_QueryUserPostArray_Handler,
+		},
+		{
+			MethodName: "QueryUserPost",
+			Handler:    _User_QueryUserPost_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

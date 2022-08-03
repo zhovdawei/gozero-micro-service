@@ -13,13 +13,17 @@ import (
 )
 
 type (
-	CommonResp  = pb.CommonResp
-	IdQueryReq  = pb.IdQueryReq
-	UserInfoObj = pb.UserInfoObj
+	QueryUserByIdReq         = pb.QueryUserByIdReq
+	QueryUserPostByUserIdReq = pb.QueryUserPostByUserIdReq
+	QueryUserPostReq         = pb.QueryUserPostReq
+	UserPostArrayResp        = pb.UserPostArrayResp
+	UserPostResp             = pb.UserPostResp
+	UserResp                 = pb.UserResp
 
 	User interface {
-		UserSave(ctx context.Context, in *UserInfoObj, opts ...grpc.CallOption) (*CommonResp, error)
-		UserIdQuery(ctx context.Context, in *IdQueryReq, opts ...grpc.CallOption) (*UserInfoObj, error)
+		QueryUser(ctx context.Context, in *QueryUserByIdReq, opts ...grpc.CallOption) (*UserResp, error)
+		QueryUserPostArray(ctx context.Context, in *QueryUserPostByUserIdReq, opts ...grpc.CallOption) (*UserPostArrayResp, error)
+		QueryUserPost(ctx context.Context, in *QueryUserPostReq, opts ...grpc.CallOption) (*UserPostResp, error)
 	}
 
 	defaultUser struct {
@@ -33,12 +37,17 @@ func NewUser(cli zrpc.Client) User {
 	}
 }
 
-func (m *defaultUser) UserSave(ctx context.Context, in *UserInfoObj, opts ...grpc.CallOption) (*CommonResp, error) {
+func (m *defaultUser) QueryUser(ctx context.Context, in *QueryUserByIdReq, opts ...grpc.CallOption) (*UserResp, error) {
 	client := pb.NewUserClient(m.cli.Conn())
-	return client.UserSave(ctx, in, opts...)
+	return client.QueryUser(ctx, in, opts...)
 }
 
-func (m *defaultUser) UserIdQuery(ctx context.Context, in *IdQueryReq, opts ...grpc.CallOption) (*UserInfoObj, error) {
+func (m *defaultUser) QueryUserPostArray(ctx context.Context, in *QueryUserPostByUserIdReq, opts ...grpc.CallOption) (*UserPostArrayResp, error) {
 	client := pb.NewUserClient(m.cli.Conn())
-	return client.UserIdQuery(ctx, in, opts...)
+	return client.QueryUserPostArray(ctx, in, opts...)
+}
+
+func (m *defaultUser) QueryUserPost(ctx context.Context, in *QueryUserPostReq, opts ...grpc.CallOption) (*UserPostResp, error) {
+	client := pb.NewUserClient(m.cli.Conn())
+	return client.QueryUserPost(ctx, in, opts...)
 }
