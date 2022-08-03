@@ -6,7 +6,7 @@ type (
 	}
 
 	UserResp {
-        UserId       int64  `json:"user_id"`
+        UserId       int64  `json:"userId"`
         Name         string `json:"name"`
         IdCard       string `json:"idCard"`
         Email        string `json:"email"`
@@ -23,4 +23,31 @@ type (
         CreateAt     int64  `json:"createAt"`
         UpdateAt     int64  `json:"updateAt"`
 	}
+)
+
+type (
+    PostReq {
+        PostId     int64 `json:"postId"`
+    }
+
+    PostListReq {
+		UserId     int64 `json:"userId"`
+    }
+
+    UserPostResp {
+        PostId       int64  `json:"postId"`
+        UserId       int64  `json:"userId"`
+        UserName     string `json:"userName"`
+        UserPhone    string `json:"userPhone"`
+        ProvinceCode int64  `json:"provinceCode"`
+        Province     string `json:"province"`
+        CityCode     int64  `json:"cityCode"`
+        City         string `json:"city"`
+        AreaCode     int64  `json:"areaCode"`
+        Area         string `json:"area"`
+        Address      string `json:"address"`
+        Status       int `json:"status"`
+        CreateAt     int64  `json:"createAt"`
+        UpdateAt     int64  `json:"updateAt"`
+    }
 )

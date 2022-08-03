@@ -17,6 +17,16 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/user/query",
 				Handler: userQueryByIdHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/userPost/query",
+				Handler: userPostQueryByIdHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/userPost/queryList",
+				Handler: userPostQueryListHandler(serverCtx),
+			},
 		},
 	)
 }

@@ -16,4 +16,11 @@ service user {
 	@handler userQueryById
 	post /user/query (UserReq) returns (UserResp)
 	
+	@doc "查询UserPost"
+	@handler userPostQueryById
+	post /userPost/query (PostReq) returns (UserPostResp)
+	
+	@doc "查询UserPostList"
+	@handler userPostQueryList
+	post /userPost/queryList (PostListReq) returns ([]UserPostResp)
 }

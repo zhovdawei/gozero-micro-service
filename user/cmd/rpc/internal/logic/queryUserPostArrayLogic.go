@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
 
 	"github.com/zhovdawei/gozero-micro-service/user/cmd/rpc/internal/svc"
 	"github.com/zhovdawei/gozero-micro-service/user/cmd/rpc/pb"
@@ -24,7 +25,11 @@ func NewQueryUserPostArrayLogic(ctx context.Context, svcCtx *svc.ServiceContext)
 }
 
 func (l *QueryUserPostArrayLogic) QueryUserPostArray(in *pb.QueryUserPostByUserIdReq) (*pb.UserPostArrayResp, error) {
-	// todo: add your logic here and delete this line
-
-	return &pb.UserPostArrayResp{}, nil
+	list, err := l.svcCtx.UserPostModel.FindList(l.ctx, in.UserId)
+	if err != nil {
+		return nil, err
+	}
+	var posts []*pb.UserPostResp
+	copier.Copy(&posts, list)
+	return &pb.UserPostArrayResp{UserPosts: posts}, nil
 }

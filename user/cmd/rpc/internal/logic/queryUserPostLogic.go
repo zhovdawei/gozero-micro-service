@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
 
 	"github.com/zhovdawei/gozero-micro-service/user/cmd/rpc/internal/svc"
 	"github.com/zhovdawei/gozero-micro-service/user/cmd/rpc/pb"
@@ -24,7 +25,12 @@ func NewQueryUserPostLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Que
 }
 
 func (l *QueryUserPostLogic) QueryUserPost(in *pb.QueryUserPostReq) (*pb.UserPostResp, error) {
-	// todo: add your logic here and delete this line
-
-	return &pb.UserPostResp{}, nil
+	one, err := l.svcCtx.UserPostModel.FindOne(l.ctx, in.PostId)
+	if err != nil {
+		l.Logger.Error(err)
+		return nil, err
+	}
+	var userPost pb.UserPostResp
+	copier.Copy(&userPost, one)
+	return &userPost, nil
 }
