@@ -2,11 +2,10 @@ syntax = "v1"
 
 type (
 	UserReq {
-		UserId     string `json:"userId"`
+		UserId     int64 `json:"userId"`
 	}
 
 	UserResp {
-		Uid string `json:"uid"`
         UserId       int64  `json:"user_id"`
         Name         string `json:"name"`
         IdCard       string `json:"idCard"`

@@ -8,16 +8,12 @@ info(
 	email: "zdw0607@gmail.com"
 )
 
-import "./user_type.api"
+import "./user_entity.api"
 
 service user {
 	
-	@doc "注册"
-	@handler userRegistory
-	post /user/registory (UserRegistoryReq) returns (UserRegistoryResp)
-	
-	@doc "登录"
-	@handler userLogin
-	post /user/login (UserLoginReq) returns (UserLoginResp)
+	@doc "查询User"
+	@handler userQueryById
+	post /user/query (UserReq) returns (UserResp)
 	
 }

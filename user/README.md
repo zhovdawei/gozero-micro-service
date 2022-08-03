@@ -52,17 +52,20 @@ CREATE TABLE `user_post` (
 ## Model 生成
 ```shell
 
+# 在目录 /project/user/ 中执行
 goctl model mysql datasource -url="root:Mysql_321@tcp(192.168.56.103:3306)/go_user" -table="user" -c -dir ./model
 ```
 
 ## Rpc 生成
 ```shell
 
-goctl rpc protoc ./pb/user.proto --go_out=. --go-grpc_out=. --zrpc_out=. --style=go_zero
+# 在目录 /project/user/cmd/rpc/ 中执行
+goctl rpc protoc ./pb/user.proto --go_out=. --go-grpc_out=. --zrpc_out=. --style=goZero
 ```
 
 ## Api 生成
 ```shell
 
-goctl api go -api ./desc/user_bak.api -dir . --style=go_zero
+# 在目录 /project/user/cmd/api/ 中执行
+goctl api go -api ./desc/user.api -dir . --style=goZero
 ```
