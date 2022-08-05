@@ -1,0 +1,11 @@
+syntax = "v1"
+
+info(
+    version: "v1"
+    title: "用户中心"
+    desc: "用户注册/登录/登出/注销"
+    author: "代码搬运工"
+    email: "zdw0607@gmail.com"
+)
+
+import "./goods_entity.api"

@@ -1,0 +1,101 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "./pb";
+
+service user {
+  rpc QueryGoodsList(QueryGoodsListReq) returns (GoodsResp);
+  rpc QueryGoodsAttrs(QueryGoodsAttrsReq) returns (GoodsAttrsResp);
+  rpc QueryGoodsDetail(QueryGoodsDetailReq) returns (GoodsDetailResp);
+  rpc QueryGoodsSpecById(QueryGoodsSpecByIdReq) returns (GoodsSpecVO);
+  rpc QueryGoodsSpecs(QueryGoodsSpecsReq) returns (GoodsSpecsResp);
+  rpc QueryGoodsSpecBySpec(QueryGoodsSpecBySpecReq) returns (GoodsSpecVO);
+}
+
+message QueryGoodsListReq {
+  string Category  = 1;
+  string GoodsName = 2;
+}
+
+message QueryGoodsDetailReq {
+  int64 GoodsId = 1;
+}
+
+message QueryGoodsAttrsReq {
+  int64 GoodsId = 1;
+}
+
+message QueryGoodsSpecsReq {
+  int64 GoodsId = 1;
+}
+
+message QueryGoodsSpecBySpecReq {
+  int64  GoodsId = 1;
+  string Spec    = 2;
+}
+
+message QueryGoodsSpecByIdReq {
+  int64 GoodsSpecId = 1;
+}
+
+message GoodsResp {
+  repeated GoodsVO goodsList = 1;
+}
+
+message GoodsVO {
+  int64  GoodsId   = 1;
+  string GoodsName = 2;
+  string Title     = 3;
+  string Company   = 4;
+  string Category  = 5;
+  string Logo      = 6;
+  string Content   = 7;
+  int32  SalePrice = 8;
+  int32  MinPrice  = 9;
+  int32  MaxPrice  = 10;
+  int32  Stock     = 11;
+  int32  Sale      = 12;
+  int32  IsAttr    = 13;
+  int32  Status    = 14;
+  int32  Deleted   = 15;
+  int64  CreateAt  = 16;
+  int64  UpdateAt  = 17;
+}
+
+message GoodsDetailResp {
+  GoodsVO goods                  = 1;
+  repeated GoodsAttrsVO goodsAttrs = 2;
+}
+
+message GoodsAttrsResp {
+  repeated GoodsAttrsVO goodsAttrs = 1;
+}
+
+message GoodsAttrsVO {
+  int64  GoodsAttrId = 1;
+  int64  GoodsId     = 2;
+  string AttrName    = 3;
+  string AttrVals    = 4;
+  int32  Deleted     = 5;
+  int64  CreateAt    = 6;
+  int64  UpdateAt    = 7;
+}
+
+message GoodsSpecVO {
+  int64  GoodsSpecId = 1;
+  int64  GoodsId     = 2;
+  string Spec        = 3;
+  int32  SalePrice   = 4;
+  int32  Stock       = 5;
+  int32  Sale        = 6;
+  string Preview     = 7;
+  int32  Deleted     = 8;
+  int64  CreateAt    = 9;
+  int64  UpdateAt    = 10;
+}
+
+message GoodsSpecsResp {
+  repeated GoodsSpecVO goodsSpecs = 1;
+}
+

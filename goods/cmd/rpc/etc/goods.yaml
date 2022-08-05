@@ -1,0 +1,11 @@
+Name: rpc.goods
+ListenOn: 127.0.0.1:18002
+Etcd:
+  Hosts:
+    - 192.168.56.103:2379
+  Key: rpc.goods
+Mysql:
+  DataSource: root:Mysql_321@tcp(192.168.56.103:3306)/go_goods?charset=utf8&parseTime=true&loc=Asia%2FShanghai
+CacheRedis:
+  - Host: 192.168.56.103:6379
+    Type: node
