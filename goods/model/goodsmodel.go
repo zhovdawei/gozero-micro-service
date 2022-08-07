@@ -2,7 +2,9 @@ package model
 
 import (
 	"context"
+	"fmt"
 	"github.com/zeromicro/go-zero/core/stores/cache"
+	"github.com/zeromicro/go-zero/core/stores/sqlc"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
 
@@ -15,6 +17,7 @@ type (
 		goodsModel
 		FindListByCategory(ctx context.Context, category string) ([]*Goods, error)
 		FindListByGoodsName(ctx context.Context, goodsName string) ([]*Goods, error)
+		FindListGoods(ctx context.Context, category string, goodsName string, lastId int64, size int32) ([]*Goods, error)
 	}
 
 	customGoodsModel struct {
@@ -42,13 +45,33 @@ func (m *defaultGoodsModel) FindListByCategory(ctx context.Context, category str
 }
 
 func (m *defaultGoodsModel) FindListByGoodsName(ctx context.Context, goodsName string) ([]*Goods, error) {
-	goodsName = "%" + goodsName + "%"
+	goodsName = "'%" + goodsName + "%'"
 	query := "SELECT * FROM goods WHERE goods_name like ?"
 	var goodsList []*Goods
 	err := m.QueryRowsNoCacheCtx(ctx, &goodsList, query, goodsName)
 	switch err {
 	case nil:
 		return goodsList, nil
+	default:
+		return nil, err
+	}
+}
+
+func (m *defaultGoodsModel) FindListGoods(ctx context.Context, category string, goodsName string, lastId int64, size int32) ([]*Goods, error) {
+	if category != "" {
+		category = "and category = '" + category + "'"
+	}
+	if goodsName != "" {
+		goodsName = "and goods_name like '%" + goodsName + "%'"
+	}
+	query := fmt.Sprintf("SELECT * FROM goods where goods_id > ? %s %s ORDER BY goods_id LIMIT ?", category, goodsName)
+	var goodsList []*Goods
+	err := m.QueryRowsNoCacheCtx(ctx, &goodsList, query, lastId, size)
+	switch err {
+	case nil:
+		return goodsList, nil
+	case sqlc.ErrNotFound:
+		return nil, nil
 	default:
 		return nil, err
 	}

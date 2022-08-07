@@ -1,11 +1,33 @@
 syntax = "v1"
 
 info(
-    version: "v1"
-    title: "用户中心"
-    desc: "用户注册/登录/登出/注销"
-    author: "代码搬运工"
-    email: "zdw0607@gmail.com"
+	version: "v1"
+	title: "商品中心"
+	desc: "商品"
+	author: "代码搬运工"
+	email: "zdw0607@foxmail.com"
 )
 
-import "./goods_entity.api"
+import "./goods_pc.api"
+import "./goods_mt.api"
+
+@server(
+	group: pc
+	middleware: AuthMiddleware
+	prefix: /goods/pc/v1
+)
+service goods {
+	@doc "[pc] - 查询商品列表"
+	@handler queryGoodsList
+	post /queryList (GoodsSearchPcReq) returns (GoodsSearchPcResp)
+}
+
+@server(
+	group: mt
+	prefix: /goods/mt/v1
+)
+service goods {
+	@doc "[mt] - 查询商品列表"
+	@handler queryGoodsList
+	post /queryList (GoodsSearchMtReq) returns (GoodsSearchMtResp)
+}

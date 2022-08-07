@@ -1,0 +1,8 @@
+Name: goods
+Host: 0.0.0.0
+Port: 19002
+GoodsRpc:
+  Etcd:
+    Hosts:
+      - 192.168.56.103:2379
+    Key: rpc.goods

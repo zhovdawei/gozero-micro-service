@@ -1,0 +1,34 @@
+syntax = "v1"
+
+type (
+    GoodsSearchMtReq {
+        Category    string `json:"category,optional"`
+        GoodsName   string `json:"goodsName,optional"`
+        LastGoodsId int64  `json:"lastGoodsId"`
+        Size        int    `json:"size"`
+    }
+
+    GoodsSearchMtResp {
+        IsNext    int         `json:"isNext"`
+        GoodsList []GoodsMtVO `json:"goodsList"`
+    }
+
+)
+
+type GoodsMtVO {
+    GoodsId   int64  `json:"goodsId"`
+    GoodsName string `json:"goodsName"`
+    Title     string `json:"title"`
+    Company   string `json:"company"`
+    Category  string `json:"category"`
+    Logo      string `json:"logo"`
+    Content   string `json:"content"`
+    SalePrice int    `json:"salePrice"`
+    MinPrice  int    `json:"minPrice"`
+    MaxPrice  int    `json:"maxPrice"`
+    Stock     int    `json:"stock"`
+    Sale      int    `json:"sale"`
+    IsAttr    int    `json:"isAttr"`
+    Status    int    `json:"status"`
+    Deleted   int    `json:"deleted"`
+}

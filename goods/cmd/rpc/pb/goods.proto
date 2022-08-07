@@ -14,8 +14,10 @@ service user {
 }
 
 message QueryGoodsListReq {
-  string Category  = 1;
-  string GoodsName = 2;
+  string Category    = 1;
+  string GoodsName   = 2;
+  int64  LastGoodsId = 3;
+  int32  Size        = 4;
 }
 
 message QueryGoodsDetailReq {
