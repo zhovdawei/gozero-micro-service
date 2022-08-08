@@ -3,7 +3,7 @@ syntax = "v1"
 info(
 	version: "v1"
 	title: "商品中心"
-	desc: "商品"
+	desc: "商品信息相关"
 	author: "代码搬运工"
 	email: "zdw0607@foxmail.com"
 )
