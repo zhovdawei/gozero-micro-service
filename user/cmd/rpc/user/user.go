@@ -13,6 +13,7 @@ import (
 )
 
 type (
+	GetUserByPhone           = pb.GetUserByPhone
 	QueryUserByIdReq         = pb.QueryUserByIdReq
 	QueryUserPostByUserIdReq = pb.QueryUserPostByUserIdReq
 	QueryUserPostReq         = pb.QueryUserPostReq
@@ -24,6 +25,7 @@ type (
 		QueryUser(ctx context.Context, in *QueryUserByIdReq, opts ...grpc.CallOption) (*UserResp, error)
 		QueryUserPostArray(ctx context.Context, in *QueryUserPostByUserIdReq, opts ...grpc.CallOption) (*UserPostArrayResp, error)
 		QueryUserPost(ctx context.Context, in *QueryUserPostReq, opts ...grpc.CallOption) (*UserPostResp, error)
+		QueryUserByPhone(ctx context.Context, in *GetUserByPhone, opts ...grpc.CallOption) (*UserResp, error)
 	}
 
 	defaultUser struct {
@@ -50,4 +52,9 @@ func (m *defaultUser) QueryUserPostArray(ctx context.Context, in *QueryUserPostB
 func (m *defaultUser) QueryUserPost(ctx context.Context, in *QueryUserPostReq, opts ...grpc.CallOption) (*UserPostResp, error) {
 	client := pb.NewUserClient(m.cli.Conn())
 	return client.QueryUserPost(ctx, in, opts...)
+}
+
+func (m *defaultUser) QueryUserByPhone(ctx context.Context, in *GetUserByPhone, opts ...grpc.CallOption) (*UserResp, error) {
+	client := pb.NewUserClient(m.cli.Conn())
+	return client.QueryUserByPhone(ctx, in, opts...)
 }

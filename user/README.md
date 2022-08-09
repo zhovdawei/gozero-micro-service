@@ -69,3 +69,12 @@ goctl rpc protoc ./pb/user.proto --go_out=. --go-grpc_out=. --zrpc_out=. --style
 # 在目录 /project/user/cmd/api/ 中执行
 goctl api go -api ./desc/user.api -dir . --style=goZero
 ```
+
+## Debug 设置
+```
+Run kind:  File
+Files:     main方法路径，比如user-api(/home/zdw/workPlace/go/gozero-micro-service/user/cmd/api/user.go)
+Working directory: main方法所在的目录，比如user-api(/home/zdw/workPlace/go/gozero-micro-service/user/cmd/api)
+
+
+```

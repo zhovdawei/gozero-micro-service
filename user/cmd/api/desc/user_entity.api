@@ -51,3 +51,15 @@ type (
         UpdateAt     int64  `json:"updateAt"`
     }
 )
+
+type (
+    UserLoginReq {
+        Phone        string `json:"phone"`
+        Password     string `json:"password"`
+    }
+
+    UserLoginResp {
+        Token string `json:"token"`
+    }
+
+)

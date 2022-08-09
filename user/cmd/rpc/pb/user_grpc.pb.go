@@ -25,6 +25,7 @@ type UserClient interface {
 	QueryUser(ctx context.Context, in *QueryUserByIdReq, opts ...grpc.CallOption) (*UserResp, error)
 	QueryUserPostArray(ctx context.Context, in *QueryUserPostByUserIdReq, opts ...grpc.CallOption) (*UserPostArrayResp, error)
 	QueryUserPost(ctx context.Context, in *QueryUserPostReq, opts ...grpc.CallOption) (*UserPostResp, error)
+	QueryUserByPhone(ctx context.Context, in *GetUserByPhone, opts ...grpc.CallOption) (*UserResp, error)
 }
 
 type userClient struct {
@@ -62,6 +63,15 @@ func (c *userClient) QueryUserPost(ctx context.Context, in *QueryUserPostReq, op
 	return out, nil
 }
 
+func (c *userClient) QueryUserByPhone(ctx context.Context, in *GetUserByPhone, opts ...grpc.CallOption) (*UserResp, error) {
+	out := new(UserResp)
+	err := c.cc.Invoke(ctx, "/pb.user/QueryUserByPhone", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServer is the server API for User service.
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility
@@ -69,6 +79,7 @@ type UserServer interface {
 	QueryUser(context.Context, *QueryUserByIdReq) (*UserResp, error)
 	QueryUserPostArray(context.Context, *QueryUserPostByUserIdReq) (*UserPostArrayResp, error)
 	QueryUserPost(context.Context, *QueryUserPostReq) (*UserPostResp, error)
+	QueryUserByPhone(context.Context, *GetUserByPhone) (*UserResp, error)
 	mustEmbedUnimplementedUserServer()
 }
 
@@ -84,6 +95,9 @@ func (UnimplementedUserServer) QueryUserPostArray(context.Context, *QueryUserPos
 }
 func (UnimplementedUserServer) QueryUserPost(context.Context, *QueryUserPostReq) (*UserPostResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QueryUserPost not implemented")
+}
+func (UnimplementedUserServer) QueryUserByPhone(context.Context, *GetUserByPhone) (*UserResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryUserByPhone not implemented")
 }
 func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
 
@@ -152,6 +166,24 @@ func _User_QueryUserPost_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_QueryUserByPhone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserByPhone)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).QueryUserByPhone(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.user/QueryUserByPhone",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).QueryUserByPhone(ctx, req.(*GetUserByPhone))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // User_ServiceDesc is the grpc.ServiceDesc for User service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -170,6 +202,10 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "QueryUserPost",
 			Handler:    _User_QueryUserPost_Handler,
+		},
+		{
+			MethodName: "QueryUserByPhone",
+			Handler:    _User_QueryUserByPhone_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

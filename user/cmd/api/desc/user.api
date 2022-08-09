@@ -23,4 +23,8 @@ service user {
 	@doc "查询UserPostList"
 	@handler userPostQueryList
 	post /userPost/queryList (PostListReq) returns ([]UserPostResp)
+	
+	@doc "手机号+密码登录"
+	@handler userLoginByPhone
+	post /user/login (UserLoginReq) returns (UserLoginResp)
 }

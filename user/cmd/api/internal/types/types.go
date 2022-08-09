@@ -48,3 +48,12 @@ type UserPostResp struct {
 	CreateAt     int64  `json:"createAt"`
 	UpdateAt     int64  `json:"updateAt"`
 }
+
+type UserLoginReq struct {
+	Phone    string `json:"phone"`
+	Password string `json:"password"`
+}
+
+type UserLoginResp struct {
+	Token string `json:"token"`
+}

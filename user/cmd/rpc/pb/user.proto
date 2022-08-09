@@ -8,6 +8,7 @@ service user {
   rpc QueryUser(QueryUserByIdReq) returns (UserResp);
   rpc QueryUserPostArray(QueryUserPostByUserIdReq) returns (UserPostArrayResp);
   rpc QueryUserPost(QueryUserPostReq) returns (UserPostResp);
+  rpc QueryUserByPhone(GetUserByPhone) returns (UserResp);
 }
 
 
@@ -67,4 +68,9 @@ message UserPostResp {
   int32 Status = 12;
   int64 CreateAt = 13;
   int64 UpdateAt = 14;
+}
+
+// 根据手机号+密码查询用户信息
+message GetUserByPhone {
+  string Phone = 1;
 }

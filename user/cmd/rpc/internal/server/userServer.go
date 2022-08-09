@@ -36,3 +36,8 @@ func (s *UserServer) QueryUserPost(ctx context.Context, in *pb.QueryUserPostReq)
 	l := logic.NewQueryUserPostLogic(ctx, s.svcCtx)
 	return l.QueryUserPost(in)
 }
+
+func (s *UserServer) QueryUserByPhone(ctx context.Context, in *pb.GetUserByPhone) (*pb.UserResp, error) {
+	l := logic.NewQueryUserByPhoneLogic(ctx, s.svcCtx)
+	return l.QueryUserByPhone(in)
+}
