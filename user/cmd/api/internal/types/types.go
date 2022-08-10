@@ -55,5 +55,7 @@ type UserLoginReq struct {
 }
 
 type UserLoginResp struct {
-	Token string `json:"token"`
+	Token   string `json:"token"`
+	Expire  int64  `json:"expire"`
+	Refresh int64  `json:"refresh"`
 }

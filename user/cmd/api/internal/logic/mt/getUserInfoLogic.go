@@ -1,7 +1,8 @@
-package logic
+package mt
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"github.com/jinzhu/copier"
 	"github.com/zhovdawei/gozero-micro-service/user/cmd/rpc/user"
@@ -12,34 +13,37 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type UserQueryByIdLogic struct {
+type GetUserInfoLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewUserQueryByIdLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserQueryByIdLogic {
-	return &UserQueryByIdLogic{
+func NewGetUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetUserInfoLogic {
+	return &GetUserInfoLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *UserQueryByIdLogic) UserQueryById(req *types.UserReq) (resp *types.UserResp, err error) {
-	// todo: add your logic here and delete this line
-	rpcUserResp, err := l.svcCtx.UserRpc.QueryUser(l.ctx,&user.QueryUserByIdReq{UserId: req.UserId})
+func (l *GetUserInfoLogic) GetUserInfo() (resp *types.UserResp, err error) {
+	userId, err := l.ctx.Value("userId").(json.Number).Int64()
+	if err != nil {
+		l.Logger.Error("json.Number 转化错误，非数字")
+	}
+	rpcUserResp, err := l.svcCtx.UserRpc.QueryUser(l.ctx, &user.QueryUserByIdReq{UserId: userId})
 	if err != nil {
 		l.Logger.Error(err)
 		return nil, err
 	}
 	if rpcUserResp == nil {
-		return nil,nil
+		return nil, nil
 	}
 	fmt.Println(*rpcUserResp)
 	var userResult types.UserResp
 
-	copier.Copy(&userResult,rpcUserResp)
+	copier.Copy(&userResult, rpcUserResp)
 	fmt.Println(userResult)
-	return &userResult,nil
+	return &userResult, nil
 }

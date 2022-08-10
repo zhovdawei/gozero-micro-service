@@ -10,7 +10,17 @@ info(
 
 import "./user_entity.api"
 
+@server(
+	jwt: Auth
+	group: mt
+	prefix: /mt
+	middleware: AuthMiddleware
+)
 service user {
+	
+	@doc "获取登录用户信息"
+	@handler getUserInfo
+	post /getUserInfo () returns (UserResp)
 	
 	@doc "查询User"
 	@handler userQueryById
@@ -23,8 +33,17 @@ service user {
 	@doc "查询UserPostList"
 	@handler userPostQueryList
 	post /userPost/queryList (PostListReq) returns ([]UserPostResp)
+}
+
+// 登录接口管理
+@server(
+	group: login
+	prefix: /login
+)
+service user {
 	
-	@doc "手机号+密码登录"
-	@handler userLoginByPhone
-	post /user/login (UserLoginReq) returns (UserLoginResp)
+	@doc "移动端用户登录"
+	@handler mtLogin
+	post /mt (UserLoginReq) returns (UserLoginResp)
+	
 }

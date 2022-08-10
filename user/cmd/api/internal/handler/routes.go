@@ -4,6 +4,8 @@ package handler
 import (
 	"net/http"
 
+	login "github.com/zhovdawei/gozero-micro-service/user/cmd/api/internal/handler/login"
+	mt "github.com/zhovdawei/gozero-micro-service/user/cmd/api/internal/handler/mt"
 	"github.com/zhovdawei/gozero-micro-service/user/cmd/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -11,27 +13,43 @@ import (
 
 func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.AuthMiddleware},
+			[]rest.Route{
+				{
+					Method:  http.MethodPost,
+					Path:    "/getUserInfo",
+					Handler: mt.GetUserInfoHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/user/query",
+					Handler: mt.UserQueryByIdHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/userPost/query",
+					Handler: mt.UserPostQueryByIdHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/userPost/queryList",
+					Handler: mt.UserPostQueryListHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/mt"),
+	)
+
+	server.AddRoutes(
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
-				Path:    "/user/query",
-				Handler: userQueryByIdHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/userPost/query",
-				Handler: userPostQueryByIdHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/userPost/queryList",
-				Handler: userPostQueryListHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/user/login",
-				Handler: userLoginByPhoneHandler(serverCtx),
+				Path:    "/mt",
+				Handler: login.MtLoginHandler(serverCtx),
 			},
 		},
+		rest.WithPrefix("/login"),
 	)
 }
