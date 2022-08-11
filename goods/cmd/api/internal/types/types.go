@@ -45,6 +45,31 @@ type GoodsSearchMtResp struct {
 	GoodsList []GoodsMtVO `json:"goodsList"`
 }
 
+type GoodsAttrsMtReq struct {
+	GoodsId int64 `json:"goodsId"`
+}
+
+type GoodsAttrsMtResp struct {
+	GoodsAttrs []*GoodsAttrVO `json:"goodsAttrs"`
+}
+
+type GoodsSpecMtReq struct {
+	GoodsSpecId int64    `json:"goodsSpecId,optional"` // 商品规格组合Id
+	GoodsId     int64    `json:"goodsId,optional"`
+	Spesc       []string `json:"specs,optional"`
+}
+
+type GoodsSpecMtResp struct {
+	GoodsSpecId int64  `json:"goodsSpecId"` // 商品id
+	GoodsId     int64  `json:"goodsId"`     // 商品品类ID
+	Spec        string `json:"spec"`        // 规格组合值
+	SalePrice   int64  `json:"salePrice"`   // 零售价(单位分)
+	Stock       int64  `json:"stock"`       // 库存
+	Sale        int64  `json:"sale"`        // 销量
+	Preview     string `json:"preview"`     // 预览图
+	Deleted     int64  `json:"deleted"`     // 删除(0-正常，1-已删除)
+}
+
 type GoodsMtVO struct {
 	GoodsId   int64  `json:"goodsId"`
 	GoodsName string `json:"goodsName"`
@@ -61,4 +86,23 @@ type GoodsMtVO struct {
 	IsAttr    int    `json:"isAttr"`
 	Status    int    `json:"status"`
 	Deleted   int    `json:"deleted"`
+}
+
+type GoodsAttrVO struct {
+	GoodsAttrId int64    `json:"goodsAttrId"`
+	GoodsId     int64    `json:"goodsId"`
+	AttrName    string   `json:"attrName"`
+	AttrVals    string   `json:"attrVals"`
+	AttrValList []string `json:"attrValList"`
+}
+
+type GoodsSpecVO struct {
+	GoodsSpecId int64  `json:"goodsSpecId"` // 商品id
+	GoodsId     int64  `json:"goodsId"`     // 商品品类ID
+	Spec        string `json:"spec"`        // 规格组合值
+	SalePrice   int64  `json:"salePrice"`   // 零售价(单位分)
+	Stock       int64  `json:"stock"`       // 库存
+	Sale        int64  `json:"sale"`        // 销量
+	Preview     string `json:"preview"`     // 预览图
+	Deleted     int64  `json:"deleted"`     // 删除(0-正常，1-已删除)
 }

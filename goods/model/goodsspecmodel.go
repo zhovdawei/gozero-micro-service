@@ -18,7 +18,7 @@ type (
 	GoodsSpecModel interface {
 		goodsSpecModel
 		FindList(ctx context.Context, goodsId int64) ([]*GoodsSpec, error)
-		QueryGoodsSpecBySpec(ctx context.Context, goodsId int64, spec string) (*GoodsSpec, error)
+		QueryGoodsSpecBySpec(ctx context.Context, goodsId int64, specs []string) (*GoodsSpec, error)
 	}
 
 	customGoodsSpecModel struct {
@@ -45,11 +45,19 @@ func (m *defaultGoodsSpecModel) FindList(ctx context.Context, goodsId int64) ([]
 	}
 }
 
-func (m *defaultGoodsSpecModel) QueryGoodsSpecBySpec(ctx context.Context, goodsId int64, spec string) (*GoodsSpec, error) {
+func (m *defaultGoodsSpecModel) QueryGoodsSpecBySpec(ctx context.Context, goodsId int64, specs []string) (*GoodsSpec, error) {
 	//query := "select * from goods_spec where goods_id = 1 and json_contains(json_array('8GB+256GB','冰川蓝'), spec->'$') LIMIT 1"
+	specVal := ""
+	cacheKey := string(goodsId)
+	for _, spec := range specs {
+		specVal = specVal + "'" + spec + "',"
+		cacheKey += spec
+	}
+	specVal = specVal[:len(specVal)-1]
 	var resp GoodsSpec
+	cacheGoGoodsGoodsSpecSpecPrefix += cacheKey
 	err := m.QueryRowCtx(ctx, &resp, cacheGoGoodsGoodsSpecSpecPrefix, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) error {
-		query := fmt.Sprintf("select * from goods_spec where goods_id = ? and json_contains(json_array(%s), spec->'$') LIMIT 1", spec)
+		query := fmt.Sprintf("select * from goods_spec where goods_id = ? and json_contains(json_array(%s), spec->'$') LIMIT 1", specVal)
 		return conn.QueryRowCtx(ctx, v, query, goodsId)
 	})
 	switch err {

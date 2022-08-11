@@ -33,8 +33,8 @@ message QueryGoodsSpecsReq {
 }
 
 message QueryGoodsSpecBySpecReq {
-  int64  GoodsId = 1;
-  string Spec    = 2;
+  int64 GoodsId         = 1;
+  repeated string Specs = 2;
 }
 
 message QueryGoodsSpecByIdReq {

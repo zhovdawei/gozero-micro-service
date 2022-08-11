@@ -12,6 +12,7 @@ import "./goods_pc.api"
 import "./goods_mt.api"
 
 @server(
+	jwt: Auth
 	group: pc
 	middleware: AuthMiddleware
 	prefix: /goods/pc/v1
@@ -30,4 +31,12 @@ service goods {
 	@doc "[mt] - 查询商品列表"
 	@handler queryGoodsList
 	post /queryList (GoodsSearchMtReq) returns (GoodsSearchMtResp)
+	
+	@doc "[mt] - 查询属性列表"
+	@handler getGoodsAttrs
+	post /queryAttrs (GoodsAttrsMtReq) returns (GoodsAttrsMtResp)
+	
+	@doc "[mt] - 查询商品规格"
+	@handler getGoodsSpec
+	post /querySpec (GoodsSpecMtReq) returns (GoodsSpecMtResp)
 }

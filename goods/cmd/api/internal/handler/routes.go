@@ -23,6 +23,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				},
 			}...,
 		),
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/goods/pc/v1"),
 	)
 
@@ -32,6 +33,16 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPost,
 				Path:    "/queryList",
 				Handler: mt.QueryGoodsListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/queryAttrs",
+				Handler: mt.GetGoodsAttrsHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/querySpec",
+				Handler: mt.GetGoodsSpecHandler(serverCtx),
 			},
 		},
 		rest.WithPrefix("/goods/mt/v1"),

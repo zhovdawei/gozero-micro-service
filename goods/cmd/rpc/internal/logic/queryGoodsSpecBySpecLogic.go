@@ -26,7 +26,7 @@ func NewQueryGoodsSpecBySpecLogic(ctx context.Context, svcCtx *svc.ServiceContex
 
 func (l *QueryGoodsSpecBySpecLogic) QueryGoodsSpecBySpec(in *pb.QueryGoodsSpecBySpecReq) (*pb.GoodsSpecVO, error) {
 	// todo: add your logic here and delete this line
-	one, err := l.svcCtx.GoodsSpecModel.QueryGoodsSpecBySpec(l.ctx, in.GoodsId, in.Spec)
+	one, err := l.svcCtx.GoodsSpecModel.QueryGoodsSpecBySpec(l.ctx, in.GoodsId, in.Specs)
 	if err != nil {
 		l.Logger.Error(err)
 		return nil, err
