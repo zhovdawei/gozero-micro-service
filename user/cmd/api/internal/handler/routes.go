@@ -23,23 +23,18 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				},
 				{
 					Method:  http.MethodPost,
-					Path:    "/user/query",
-					Handler: mt.UserQueryByIdHandler(serverCtx),
+					Path:    "/getUserPostList",
+					Handler: mt.GetUserPostListHandler(serverCtx),
 				},
 				{
 					Method:  http.MethodPost,
-					Path:    "/userPost/query",
-					Handler: mt.UserPostQueryByIdHandler(serverCtx),
-				},
-				{
-					Method:  http.MethodPost,
-					Path:    "/userPost/queryList",
-					Handler: mt.UserPostQueryListHandler(serverCtx),
+					Path:    "/getUserPost",
+					Handler: mt.GetUserPostHandler(serverCtx),
 				},
 			}...,
 		),
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
-		rest.WithPrefix("/mt"),
+		rest.WithPrefix("/mt/v1"),
 	)
 
 	server.AddRoutes(
@@ -50,6 +45,6 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: login.MtLoginHandler(serverCtx),
 			},
 		},
-		rest.WithPrefix("/login"),
+		rest.WithPrefix("/login/v1"),
 	)
 }

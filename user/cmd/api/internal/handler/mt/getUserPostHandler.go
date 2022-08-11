@@ -9,7 +9,7 @@ import (
 	"github.com/zhovdawei/gozero-micro-service/user/cmd/api/internal/types"
 )
 
-func UserPostQueryByIdHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func GetUserPostHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.PostReq
 		if err := httpx.Parse(r, &req); err != nil {
@@ -17,8 +17,8 @@ func UserPostQueryByIdHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
-		l := mt.NewUserPostQueryByIdLogic(r.Context(), svcCtx)
-		resp, err := l.UserPostQueryById(&req)
+		l := mt.NewGetUserPostLogic(r.Context(), svcCtx)
+		resp, err := l.GetUserPost(&req)
 		if err != nil {
 			httpx.Error(w, err)
 		} else {

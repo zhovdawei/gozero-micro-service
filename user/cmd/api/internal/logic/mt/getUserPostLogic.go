@@ -12,21 +12,21 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type UserPostQueryByIdLogic struct {
+type GetUserPostLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewUserPostQueryByIdLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserPostQueryByIdLogic {
-	return &UserPostQueryByIdLogic{
+func NewGetUserPostLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetUserPostLogic {
+	return &GetUserPostLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *UserPostQueryByIdLogic) UserPostQueryById(req *types.PostReq) (resp *types.UserPostResp, err error) {
+func (l *GetUserPostLogic) GetUserPost(req *types.PostReq) (resp *types.UserPostResp, err error) {
 	rpcPostResp, err := l.svcCtx.UserRpc.QueryUserPost(l.ctx, &user.QueryUserPostReq{PostId: req.PostId})
 	if err != nil {
 		l.Logger.Error(err)
