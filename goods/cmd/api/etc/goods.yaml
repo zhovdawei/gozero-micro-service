@@ -4,10 +4,11 @@ Port: 19002
 GoodsRpc:
   Etcd:
     Hosts:
-      - 192.168.56.103:2379
+      - 192.168.56.102:2379
     Key: rpc.goods
 CacheRedis:
-  - Host: 192.168.56.103:6379
+  - Host: 192.168.56.102:6379
+    Pass: Redis321
     Type: node
 Auth:
   AccessSecret: fa2847e96411d18f70bc89498889411e
